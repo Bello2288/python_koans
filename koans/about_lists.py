@@ -91,13 +91,13 @@ class AboutLists(Koan):
     def test_ranges_with_steps(self):
         self.assertEqual([5, 4], list(range(5, 3, -1)))
     # this range will start at the number 5, up to but not including 3, and stepping backwards by 1 number
-    #     self.assertEqual([0, 2, 4, 6], range(0, 8, 2))
-    # # this range will start at the number 2, up to but not including 8, stepping 2 numbers
-    #     self.assertEqual([1, 4, 7], range(1, 8, 3))
-    # # this range will start at the number 1, up to but not including 8, stepping 3 numbers
-    #     self.assertEqual([5, 1, -3], range(5, -7, -4))
-    # # this range will start at the number 5, up to but not including -7, stepping backwards by 3 number
-    #     self.assertEqual([5, 1, -3, -7], range(5, -8, -4))
+        self.assertEqual([0, 2, 4, 6], list(range(0, 8, 2)))
+    # this range will start at the number 2, up to but not including 8, stepping 2 numbers
+        self.assertEqual([1, 4, 7], list(range(1, 8, 3)))
+    # this range will start at the number 1, up to but not including 8, stepping 3 numbers
+        self.assertEqual([5, 1, -3], list(range(5, -7, -4)))
+    # this range will start at the number 5, up to but not including -7, stepping backwards by 3 number
+        self.assertEqual([5, 1, -3, -7], list(range(5, -8, -4)))
     # this range will start at the number 5, up to but not including -8, stepping backwards by 4 number
     
 
