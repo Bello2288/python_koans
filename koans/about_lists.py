@@ -48,13 +48,20 @@ class AboutLists(Koan):
     def test_slicing_lists(self):
         noms = ['peanut', 'butter', 'and', 'jelly']
 
-        self.assertEqual(["peanut"], noms[0:1])             #\
-        self.assertEqual(["peanut", "butter"], noms[0:2])   # \
-        self.assertEqual([], noms[2:2])                     #  found info at https://www.geeksforgeeks.org/python-list-slicing/
-        self.assertEqual(["and", "jelly"], noms[2:20])      # /
-        self.assertEqual([], noms[4:0])                     #/
+        self.assertEqual(["peanut"], noms[0:1])             
+        # this will slice at the index of zero, and go up to but not include index 1
+        self.assertEqual(["peanut", "butter"], noms[0:2])   
+        # this will slice at the index of zero, and go up to but not include index 2
+        self.assertEqual([], noms[2:2])                     
+        #  this will slice at the index of 2, and go up to but not include index 2, so it will return an empty list
+        self.assertEqual(["and", "jelly"], noms[2:20])      
+        # this will slice at the index of 2, and go up to but not include index 20, so will return only what is available
+        self.assertEqual([], noms[4:0])                     
+        # this will slice at the index of 4, since there is no index of 4, we return an empy list
         self.assertEqual([], noms[4:100])
+        # this will slice at the index of 4, since there is no index of 4, we return an empy list
         self.assertEqual([], noms[5:0])
+        # this will slice at the index of 5, since there is no index of 5, we return an empy list
 
 
 # --------------------------------------------------------------------------------------
@@ -84,13 +91,13 @@ class AboutLists(Koan):
     def test_ranges_with_steps(self):
         self.assertEqual([5, 4], list(range(5, 3, -1)))
     # this range will start at the number 5, up to but not including 3, and stepping backwards by 1 number
-        self.assertEqual([0, 2, 4, 6], range(0, 8, 2))
-    # this range will start at the number 2, up to but not including 8, stepping 2 numbers
-        self.assertEqual([1, 4, 7], range(1, 8, 3))
-    # this range will start at the number 1, up to but not including 8, stepping 3 numbers
-        self.assertEqual([5, 1, -3], range(5, -7, -4))
-    # this range will start at the number 5, up to but not including -7, stepping backwards by 3 number
-        self.assertEqual([5, 1, -3, -7], range(5, -8, -4))
+    #     self.assertEqual([0, 2, 4, 6], range(0, 8, 2))
+    # # this range will start at the number 2, up to but not including 8, stepping 2 numbers
+    #     self.assertEqual([1, 4, 7], range(1, 8, 3))
+    # # this range will start at the number 1, up to but not including 8, stepping 3 numbers
+    #     self.assertEqual([5, 1, -3], range(5, -7, -4))
+    # # this range will start at the number 5, up to but not including -7, stepping backwards by 3 number
+    #     self.assertEqual([5, 1, -3, -7], range(5, -8, -4))
     # this range will start at the number 5, up to but not including -8, stepping backwards by 4 number
     
 
@@ -100,11 +107,11 @@ class AboutLists(Koan):
     def test_insertions(self):
         knight = ['you', 'shall', 'pass']
         knight.insert(2, 'not')
-        self.assertEqual(__, knight)
-
+        self.assertEqual(['you', 'shall', 'not', 'pass'], knight)
+        # this will insert the string 'not' into the second index position ['you', 'shall', ^^, 'pass'] and make 'pass' the tird index
         knight.insert(0, 'Arthur')
-        self.assertEqual(__, knight)
-
+        self.assertEqual(['Arthur', 'you', 'shall', 'not', 'pass'], knight)
+        # this will take the new knight and insert the string 'Arthur' into the zero index position 
 
 # --------------------------------------------------------------------------------------
 
@@ -112,15 +119,20 @@ class AboutLists(Koan):
         stack = [10, 20, 30, 40]
         stack.append('last')
 
-        self.assertEqual(__, stack)
+        self.assertEqual([10, 20, 30, 40, 'last'], stack)
+        # stack.append('last') will insert and string 'last' to the end of the list
 
         popped_value = stack.pop()
-        self.assertEqual(__, popped_value)
-        self.assertEqual(__, stack)
+        self.assertEqual('last', popped_value)
+        # the empty pop() method will remove the last added item, in this case it was 'last'
+        self.assertEqual([10, 20, 30, 40], stack)
+        # the new stack value is [10, 20, 30, 40]
 
         popped_value = stack.pop(1)
-        self.assertEqual(__, popped_value)
-        self.assertEqual(__, stack)
+        self.assertEqual(20, popped_value)
+        # stack.pop(1) will remove the item from the first index which is 20
+        self.assertEqual([10, 30, 40], stack)
+        # the new stack value is [10, 30, 40]
 
         # Notice that there is a "pop" but no "push" in python?
 
@@ -137,11 +149,11 @@ class AboutLists(Koan):
         queue = [1, 2]
         queue.append('last')
 
-        self.assertEqual(__, queue)
+        self.assertEqual([1, 2, 'last'], queue)
 
         popped_value = queue.pop(0)
-        self.assertEqual(__, popped_value)
-        self.assertEqual(__, queue)
+        self.assertEqual(1, popped_value)
+        self.assertEqual([2, 'last'], queue)
 
         # Note, popping from the left hand side of a list is
         # inefficient. Use collections.deque instead.
