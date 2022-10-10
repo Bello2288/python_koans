@@ -8,14 +8,15 @@
 from runner.koan import *
 
 def my_global_function(a,b):
-    return a + b
+    return a + b # <---------------------------------------------
+                                            #                   |
+class AboutMethods(Koan):                   #                   |
+    def test_calling_a_global_function(self):  #                |
+        # self.assertEqual(__, my_global_function(2,3)) #       |
+        self.assertEqual(5, my_global_function(2,3))  # --------|  a + b ---> 2 + 3
 
-class AboutMethods(Koan):
-    def test_calling_a_global_function(self):
-        # self.assertEqual(__, my_global_function(2,3))
-        self.assertEqual(__, my_global_function(2,3))
-
-
+    
+    
     # NOTE: Wrong number of arguments is not a SYNTAX error, but a
     # runtime error.
     def test_calling_functions_with_wrong_number_of_arguments(self):
@@ -36,55 +37,56 @@ class AboutMethods(Koan):
 
         # Note, watch out for parenthesis. They need slashes in front!
         # self.assertRegex(msg, __)
-        self.assertRegex(msg, __)
+        self.assertRegex(msg, r'my_global_function\(\) takes 2 positional arguments but 3 were given')
 
 
+    # ------------------------------------------------------------------ ^^
 
-
-    # ------------------------------------------------------------------
+    # ------------------------------------------------------------------ vv
 
     def pointless_method(self, a, b):
         sum = a + b
 
     def test_which_does_not_return_anything(self):
         # self.assertEqual(__, self.pointless_method(1, 2))
-        self.assertEqual(__, self.pointless_method(1, 2))
+        self.assertEqual(None, self.pointless_method(1, 2))
         # Notice that methods accessed from class scope do not require
         # you to pass the first "self" argument?
 
 
+    # ------------------------------------------------------------------ ^^
 
-
-    # ------------------------------------------------------------------
+    # ------------------------------------------------------------------ vv
 
     def method_with_defaults(self, a, b='default_value'):
         return [a, b]
 
     def test_calling_with_default_values(self):
         # self.assertEqual(__, self.method_with_defaults(1))
-        self.assertEqual(__, self.method_with_defaults(1))
+        self.assertEqual([1, 'default_value'], self.method_with_defaults(1))
         # self.assertEqual(__, self.method_with_defaults(1, 2))
-        self.assertEqual(__, self.method_with_defaults(1, 2))
+        self.assertEqual([1, 2], self.method_with_defaults(1, 2))
 
 
+    # ------------------------------------------------------------------ ^^
 
-
-    # ------------------------------------------------------------------
+    # ------------------------------------------------------------------ vv
 
     def method_with_var_args(self, *args):
         return args
 
     def test_calling_with_variable_arguments(self):
         # self.assertEqual(__, self.method_with_var_args())
-        self.assertEqual(__, self.method_with_var_args())
+        self.assertEqual((), self.method_with_var_args())
         self.assertEqual(('one',), self.method_with_var_args('one'))
         # self.assertEqual(__, self.method_with_var_args('one', 'two'))
-        self.assertEqual(__, self.method_with_var_args('one', 'two'))
+        self.assertEqual(('one', 'two'), self.method_with_var_args('one', 'two'))
 
 
 
+    # ------------------------------------------------------------------^^
 
-    # ------------------------------------------------------------------
+    # ------------------------------------------------------------------vv
 
     def function_with_the_same_name(self, a, b):
         return a + b
@@ -94,7 +96,7 @@ class AboutMethods(Koan):
             return a * b
 
         # self.assertEqual(__, function_with_the_same_name(3,4))
-        self.assertEqual(__, function_with_the_same_name(3,4))
+        self.assertEqual(12, function_with_the_same_name(3,4))
 
 
 
@@ -104,12 +106,13 @@ class AboutMethods(Koan):
             return a * b
 
         # self.assertEqual(__, self.function_with_the_same_name(3,4))
-        self.assertEqual(__, self.function_with_the_same_name(3,4))
+        self.assertEqual(7, self.function_with_the_same_name(3,4))
 
 
 
+    # ------------------------------------------------------------------ ^^
 
-    # ------------------------------------------------------------------
+    # ------------------------------------------------------------------ vv
 
     def another_method_with_the_same_name(self):
         return 10
@@ -119,31 +122,27 @@ class AboutMethods(Koan):
     def another_method_with_the_same_name(self):
         return 42
 
-
-
-
     def test_that_old_methods_are_hidden_by_redefinitions(self):
         # self.assertEqual(__, self.another_method_with_the_same_name())
-        self.assertEqual(__, self.another_method_with_the_same_name())
-
+        self.assertEqual(42, self.another_method_with_the_same_name())
 
 
 
     def test_that_overlapped_method_is_still_there(self):
         # self.assertEqual(__, self.link_to_overlapped_method())
-        self.assertEqual(__, self.link_to_overlapped_method())
+        self.assertEqual(10, self.link_to_overlapped_method())
 
 
+    # ------------------------------------------------------------------ ^^
 
-
-    # ------------------------------------------------------------------
+    # ------------------------------------------------------------------ vv
 
     def empty_method(self):
         pass
 
     def test_methods_that_do_nothing_need_to_use_pass_as_a_filler(self):
         # self.assertEqual(__, self.empty_method())
-        self.assertEqual(__, self.empty_method())
+        self.assertEqual(None, self.empty_method())
 
 
 
@@ -154,23 +153,23 @@ class AboutMethods(Koan):
         "not"
         pass
         # self.assertEqual(____, "Still got to this line" != None)
-        self.assertEqual(____, "Still got to this line" != None)
+        self.assertEqual(True, "Still got to this line" != None)
 
 
+    # ------------------------------------------------------------------ ^^
 
-
-    # ------------------------------------------------------------------
+    # ------------------------------------------------------------------ vv
 
     def one_line_method(self): return 'Madagascar'
 
     def test_no_indentation_required_for_one_line_statement_bodies(self):
         # self.assertEqual(__, self.one_line_method())
-        self.assertEqual(__, self.one_line_method())
+        self.assertEqual('Madagascar', self.one_line_method())
 
 
+    # ------------------------------------------------------------------ ^^
 
-
-    # ------------------------------------------------------------------
+    # ------------------------------------------------------------------ vv
 
     def method_with_documentation(self):
         "A string placed at the beginning of a function is used for documentation"
@@ -178,12 +177,12 @@ class AboutMethods(Koan):
 
     def test_the_documentation_can_be_viewed_with_the_doc_method(self):
         # self.assertRegex(self.method_with_documentation.__doc__, __)
-        self.assertRegex(self.method_with_documentation.__doc__, __)
+        self.assertRegex(self.method_with_documentation.__doc__, 'A string placed at the beginning of a function is used for documentation')
 
 
+    # ------------------------------------------------------------------ ^^
 
-
-    # ------------------------------------------------------------------
+    # ------------------------------------------------------------------ vv
 
     class Dog:
         def name(self):
@@ -199,7 +198,7 @@ class AboutMethods(Koan):
     def test_calling_methods_in_other_objects(self):
         rover = self.Dog()
         # self.assertEqual(__, rover.name())
-        self.assertEqual(__, rover.name())
+        self.assertEqual('Fido', rover.name())
 
 
 
@@ -209,19 +208,18 @@ class AboutMethods(Koan):
 
         # This is a little rude, but legal
         # self.assertEqual(__, rover._tail())
-        self.assertEqual(__, rover._tail())
-
+        self.assertEqual("wagging", rover._tail())
 
 
 
     def test_attributes_with_double_underscore_prefixes_are_subject_to_name_mangling(self):
         rover = self.Dog()
         # with self.assertRaises(___): password = rover.__password()
-        with self.assertRaises(___): password = rover.__password()
+        with self.assertRaises(AttributeError): password = rover.__password()
 
         # But this still is!
         # self.assertEqual(__, rover._Dog__password())
-        self.assertEqual(__, rover._Dog__password())
+        self.assertEqual('password', rover._Dog__password())
 
         # Name mangling exists to avoid name clash issues when subclassing.
         # It is not for providing effective access protection
