@@ -8,13 +8,22 @@
 from runner.koan import *
 
 class AboutMonkeyPatching(Koan):
+
+#  https://www.geeksforgeeks.org/monkey-patching-in-python-dynamic-behavior/
+#  https://www.educative.io/answers/what-is-monkey-patching-in-python?utm_campaign=systemdesign&utm_source=google&utm_medium=ppc&utm_content=display&eid=5082902844932096&utm_term=&utm_campaign=%5BNew%5D+System+Design+-Performance+Max&utm_source=adwords&utm_medium=ppc&hsa_acc=5451446008&hsa_cam=18511913007&hsa_grp=&hsa_ad=&hsa_src=x&hsa_tgt=&hsa_kw=&hsa_mt=&hsa_net=adwords&hsa_ver=3&gclid=CjwKCAjw7p6aBhBiEiwA83fGujKvVzUaktT6ne-VWyt6f0twKN9L14uF38v5Oxvn2ZfJ-JVrntIRIBoC0SAQAvD_BwE
+
+
     class Dog:
         def bark(self):
             return "WOOF"
 
     def test_as_defined_dogs_do_bark(self):
         fido = self.Dog()
-        self.assertEqual(__, fido.bark())
+        # self.assertEqual(__, fido.bark())
+        self.assertEqual("WOOF", fido.bark())
+
+
+
 
     # ------------------------------------------------------------------
 
@@ -24,8 +33,13 @@ class AboutMonkeyPatching(Koan):
         self.Dog.wag = wag
 
         fido = self.Dog()
-        self.assertEqual(__, fido.wag())
-        self.assertEqual(__, fido.bark())
+        # self.assertEqual(__, fido.wag())
+        # self.assertEqual(__, fido.bark())
+        self.assertEqual("HAPPY", fido.wag())
+        self.assertEqual("WOOF", fido.bark())
+
+
+
 
     # ------------------------------------------------------------------
 
@@ -35,7 +49,11 @@ class AboutMonkeyPatching(Koan):
         except Exception as ex:
             err_msg = ex.args[0]
 
-        self.assertRegex(err_msg, __)
+        # self.assertRegex(err_msg, __)
+        self.assertRegex(err_msg, "can't set attributes of built-in/extension type 'int'")
+
+
+
 
     # ------------------------------------------------------------------
 
@@ -44,5 +62,7 @@ class AboutMonkeyPatching(Koan):
     def test_subclasses_of_built_in_classes_can_be_be_monkey_patched(self):
         self.MyInt.is_even = lambda self: (self % 2) == 0
 
-        self.assertEqual(__, self.MyInt(1).is_even())
-        self.assertEqual(__, self.MyInt(2).is_even())
+        # self.assertEqual(__, self.MyInt(1).is_even())
+        # self.assertEqual(__, self.MyInt(2).is_even())
+        self.assertEqual(False, self.MyInt(1).is_even())
+        self.assertEqual(True, self.MyInt(2).is_even())
